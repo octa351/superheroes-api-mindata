@@ -38,7 +38,7 @@ public class SuperHeroCRUDTests {
     @Test
     public void whenGetAllHeroes_ThenSuccess() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/superheroes")
+                .get("/findAllHeroes")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -60,7 +60,7 @@ public class SuperHeroCRUDTests {
     @Test
     public void whenGetHeroByName_ThenSuccess() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/superheroes")
+                        .get("/superHero")
                         .content("Bat")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -72,7 +72,7 @@ public class SuperHeroCRUDTests {
     @Test
     public void whenGetHeroByNameAndItDoesntExists_ThenNotFound() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .get("/superheroes")
+                        .get("/superHero")
                         .content("Bat")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -83,7 +83,7 @@ public class SuperHeroCRUDTests {
     @Test
     public void whenModifyHero_ThenSuccess() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .put("/superheroes")
+                        .put("/superHero")
                         .content("'name': 'Batman', 'id':'1'")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -95,7 +95,7 @@ public class SuperHeroCRUDTests {
     @Test
     public void whenDeleteHero_ThenSuccess() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/superheroes")
+                        .delete("/superHero")
                         .content("'name':'Batman', 'id':'1'")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
