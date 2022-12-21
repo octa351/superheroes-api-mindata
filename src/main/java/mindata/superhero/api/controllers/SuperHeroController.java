@@ -2,6 +2,7 @@ package mindata.superhero.api.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import mindata.superhero.api.exceptions.HeroNotFoundException;
 import mindata.superhero.api.models.SuperHero;
 import mindata.superhero.api.services.SuperHeroService;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class SuperHeroController {
@@ -40,6 +42,22 @@ public class SuperHeroController {
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
     public ResponseEntity<Object> getSuperHeroByName(@RequestParam String name) {
         List<SuperHero> superHeroResponse = superHeroService.findSuperHeroByName(name);
+        if (superHeroResponse.isEmpty()){
+            throw new HeroNotFoundException("No heroes where found");
+        }
+        return ResponseEntity.ok().body(superHeroResponse);
+    }
+
+    @Operation(summary = "Get a superhero by id",
+            description = "Get a superhero by id")
+    @RequestMapping(value = "/superHeroById",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    public ResponseEntity<Object> getSuperHeroById(@RequestParam String id) {
+        Optional<SuperHero> superHeroResponse = superHeroService.findSuperHeroById(id);
+        if (superHeroResponse.isEmpty()){
+            throw new HeroNotFoundException("No hero found with the provided id");
+        }
         return ResponseEntity.ok().body(superHeroResponse);
     }
 
@@ -52,8 +70,8 @@ public class SuperHeroController {
             method = RequestMethod.DELETE)
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
     public ResponseEntity<Object> deleteSuperHeroById(@RequestParam String id) {
-        SuperHero superHeroResponse = superHeroService.deleteSuperHeroById(id);
-        return ResponseEntity.ok().body(superHeroResponse);
+        superHeroService.deleteSuperHeroById(id);
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Get all superheroes from database",
@@ -65,6 +83,9 @@ public class SuperHeroController {
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
     public ResponseEntity<Object> getAllSuperHeroes() {
         List<SuperHero> superHeroResponse = superHeroService.findAllSuperHeroes();
+        if (superHeroResponse.isEmpty()){
+            throw new HeroNotFoundException("No heroes where found");
+        }
         return ResponseEntity.ok().body(superHeroResponse);
     }
 }
