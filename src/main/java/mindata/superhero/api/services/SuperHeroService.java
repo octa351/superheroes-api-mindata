@@ -22,12 +22,8 @@ public class SuperHeroService {
     public SuperHero saveSuperHero(SuperHero superHero) {
         Optional<SuperHero> superHeroOptional = superHeroRepository.findById(superHero.getId());
         if (superHeroOptional.isPresent()){
-            SuperHero superHeroToUpdate = superHeroOptional.get();
-            superHeroToUpdate.setName(superHero.getName());
-
-            superHeroRepository.save(superHeroToUpdate);
-
-            return superHeroToUpdate;
+            superHeroRepository.save(superHero);
+            return superHero;
         }
         else{
             StringBuilder errorStringBuilder = new StringBuilder();
