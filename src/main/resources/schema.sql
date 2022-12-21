@@ -1,4 +1,4 @@
-DROP TABLE superhero;
+DROP TABLE IF EXISTS superhero;
 CREATE TABLE superhero (
                          id   INTEGER      NOT NULL AUTO_INCREMENT,
                          name VARCHAR(128) NOT NULL,
