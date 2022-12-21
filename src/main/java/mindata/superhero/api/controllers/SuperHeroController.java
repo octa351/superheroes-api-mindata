@@ -49,10 +49,12 @@ public class SuperHeroController {
     }
 
     @Operation(summary = "Get a superhero by id",
+            security = {@SecurityRequirement(name = "spring_oauth", scopes = {"q2-reprocess-resource-server/octa_scope"})},
             description = "Get a superhero by id")
     @RequestMapping(value = "/superHeroById",
             produces = { "application/json" },
             method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
     public ResponseEntity<Object> getSuperHeroById(@RequestParam String id) {
         Optional<SuperHero> superHeroResponse = superHeroService.findSuperHeroById(id);
         if (superHeroResponse.isEmpty()){

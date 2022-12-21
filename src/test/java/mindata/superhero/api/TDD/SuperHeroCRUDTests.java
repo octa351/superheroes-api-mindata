@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +29,7 @@ import mindata.superhero.api.exceptions.HeroNotFoundException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @Transactional
 @SpringBootConfiguration
+@WithMockUser(authorities = {"SCOPE_q2-reprocess-resource-server/octa_scope"})
 public class SuperHeroCRUDTests {
 
     @Autowired
@@ -117,8 +120,7 @@ public class SuperHeroCRUDTests {
 
         String heroJson = createRequestJson(new SuperHero(1L,"BATMAN"));
 
-        this.mockMvc.perform(MockMvcRequestBuilders
-                        .post("/superHero")
+        this.mockMvc.perform(post("/superHero")
                         .content(heroJson)
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())

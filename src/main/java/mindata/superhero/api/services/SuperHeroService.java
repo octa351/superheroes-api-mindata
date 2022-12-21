@@ -34,9 +34,7 @@ public class SuperHeroService {
     }
 
     public List<SuperHero> findSuperHeroByName(String name) {
-
         List<SuperHero> superHeroes = superHeroRepository.findSuperHeroContainingCharSequence(name);
-
         return superHeroes;
     }
 
