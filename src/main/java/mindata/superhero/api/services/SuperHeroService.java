@@ -1,19 +1,48 @@
 package mindata.superhero.api.services;
 
+import mindata.superhero.api.exceptions.HeroNotFoundException;
 import mindata.superhero.api.models.SuperHero;
+import mindata.superhero.api.repositories.SuperHeroRepository;
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SuperHeroService {
-    public SuperHero saveSuperHero(SuperHero superHero) {
-        throw new NotImplementedException();
+
+    private final SuperHeroRepository superHeroRepository;
+
+    public SuperHeroService(SuperHeroRepository superHeroRepository) {
+        this.superHeroRepository = superHeroRepository;
     }
 
-    public SuperHero findSuperHeroByName(String name) {
-        throw new NotImplementedException();
+    public SuperHero saveSuperHero(SuperHero superHero) {
+        Optional<SuperHero> superHeroOptional = superHeroRepository.findById(superHero.getId());
+        if (superHeroOptional.isPresent()){
+            SuperHero superHeroToUpdate = superHeroOptional.get();
+            superHeroToUpdate.setName(superHero.getName());
+
+            superHeroRepository.save(superHeroToUpdate);
+
+            return superHeroToUpdate;
+        }
+        else{
+            StringBuilder errorStringBuilder = new StringBuilder();
+            errorStringBuilder.append("Hero with id: ");
+            errorStringBuilder.append(superHero.getId());
+            errorStringBuilder.append(" Not found");
+            throw new HeroNotFoundException(errorStringBuilder.toString());
+        }
+    }
+
+    public List<SuperHero> findSuperHeroByName(String name) {
+
+        List<SuperHero> superHeroes = superHeroRepository.findSuperHeroContainingCharSequence(name);
+
+        return superHeroes;
     }
 
     public SuperHero deleteSuperHeroById(String id) {
@@ -21,6 +50,6 @@ public class SuperHeroService {
     }
 
     public List<SuperHero> findAllSuperHeroes() {
-        throw new NotImplementedException();
+        return superHeroRepository.findAll();
     }
 }
