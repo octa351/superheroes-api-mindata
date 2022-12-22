@@ -153,8 +153,7 @@ public class SuperHeroCRUDTests {
                         .param("id", "1")
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isNotFound())
-                .andExpect(result -> assertTrue(result.getResolvedException() instanceof HeroNotFoundException));
+                .andExpect(status().isOk());
 
     }
 
