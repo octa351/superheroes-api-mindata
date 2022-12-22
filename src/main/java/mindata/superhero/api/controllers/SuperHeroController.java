@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import mindata.superhero.api.exceptions.HeroNotFoundException;
 import mindata.superhero.api.models.SuperHero;
 import mindata.superhero.api.services.SuperHeroService;
+import mindata.superhero.api.timetracker.LogTimeTaken;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ public class SuperHeroController {
             produces = { "application/json" },
             method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
+    @LogTimeTaken
     public ResponseEntity<Object> postSuperHero(@RequestBody SuperHero superHero) {
         SuperHero superHeroResponse = superHeroService.saveSuperHero(superHero);
         return ResponseEntity.ok().body(superHeroResponse);
@@ -40,6 +42,7 @@ public class SuperHeroController {
             produces = { "application/json" },
             method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
+    @LogTimeTaken
     public ResponseEntity<Object> getSuperHeroByName(@RequestParam String name) {
         List<SuperHero> superHeroResponse = superHeroService.findSuperHeroByName(name);
         if (superHeroResponse.isEmpty()){
@@ -55,6 +58,7 @@ public class SuperHeroController {
             produces = { "application/json" },
             method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
+    @LogTimeTaken
     public ResponseEntity<Object> getSuperHeroById(@RequestParam String id) {
         Optional<SuperHero> superHeroResponse = superHeroService.findSuperHeroById(id);
         if (superHeroResponse.isEmpty()){
@@ -71,6 +75,7 @@ public class SuperHeroController {
             consumes = { "application/json" },
             method = RequestMethod.DELETE)
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
+    @LogTimeTaken
     public ResponseEntity<Object> deleteSuperHeroById(@RequestParam String id) {
         superHeroService.deleteSuperHeroById(id);
         return ResponseEntity.ok().build();
@@ -83,6 +88,7 @@ public class SuperHeroController {
             produces = { "application/json" },
             method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
+    @LogTimeTaken
     public ResponseEntity<Object> getAllSuperHeroes() {
         List<SuperHero> superHeroResponse = superHeroService.findAllSuperHeroes();
         if (superHeroResponse.isEmpty()){
