@@ -34,14 +34,12 @@ public class SuperHeroService {
     }
 
     public List<SuperHero> findSuperHeroByName(String name) {
-        List<SuperHero> superHeroes = superHeroRepository.findSuperHeroContainingCharSequence(name);
-        return superHeroes;
+        return superHeroRepository.findSuperHeroContainingCharSequence(name);
     }
 
-    public void deleteSuperHeroById(String id) {
-        Long idToDelete = Long.parseLong(id);
+    public void deleteSuperHeroById(Long id) {
         try{
-            superHeroRepository.deleteById(idToDelete);
+            superHeroRepository.deleteById(id);
         }
         catch(EmptyResultDataAccessException e){
             throw new HeroNotFoundException("No hero with the provided id was found to delete");
@@ -52,8 +50,7 @@ public class SuperHeroService {
         return superHeroRepository.findAll();
     }
 
-    public Optional<SuperHero> findSuperHeroById(String id) {
-        Long idToFind = Long.parseLong(id);
-        return superHeroRepository.findById(idToFind);
+    public Optional<SuperHero> findSuperHeroById(Long id) {
+        return superHeroRepository.findById(id);
     }
 }

@@ -15,3 +15,6 @@ VALUES (5, 'CATWOMAN');
 
 INSERT INTO superhero (id, name)
 VALUES (6, 'SPIDERGIRL');
+
+INSERT INTO superhero (id, name)
+VALUES (7, 'SAITAMA');

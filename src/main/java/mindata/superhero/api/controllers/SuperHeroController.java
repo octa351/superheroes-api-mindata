@@ -59,7 +59,7 @@ public class SuperHeroController {
             method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
     @LogTimeTaken
-    public ResponseEntity<Object> getSuperHeroById(@RequestParam String id) {
+    public ResponseEntity<Object> getSuperHeroById(@RequestParam Long id) {
         Optional<SuperHero> superHeroResponse = superHeroService.findSuperHeroById(id);
         if (superHeroResponse.isEmpty()){
             throw new HeroNotFoundException("No hero found with the provided id");
@@ -72,11 +72,10 @@ public class SuperHeroController {
             description = "Delete a superhero from database")
     @RequestMapping(value = "/superHero",
             produces = { "application/json" },
-            consumes = { "application/json" },
             method = RequestMethod.DELETE)
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
     @LogTimeTaken
-    public ResponseEntity<Object> deleteSuperHeroById(@RequestParam String id) {
+    public ResponseEntity<Object> deleteSuperHeroById(@RequestParam Long id) {
         superHeroService.deleteSuperHeroById(id);
         return ResponseEntity.ok().build();
     }
