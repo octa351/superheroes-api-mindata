@@ -9,6 +9,4 @@
 
 # Aclaraciones
 - Se levanto un server de oauth en Amazon con cognito para darle seguridad a las apis, el client id y secret para 
-poder entrar al swagger son los siguientes: 
-`client id:3if6a6fveotqpe6r3t0hh4vuea
-     client secret:  5krqiogkiva6khvs3m7seiqug79ji6ea1rcdgd4estshdfl4sje`
+poder entrar al swagger se pasaran por mail
