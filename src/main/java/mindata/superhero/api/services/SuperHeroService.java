@@ -19,13 +19,13 @@ public class SuperHeroService {
     }
 
     public SuperHero saveSuperHero(SuperHero superHero) {
-        Optional<SuperHero> superHeroOptional = superHeroRepository.findById(superHero.getId());
+        var superHeroOptional = superHeroRepository.findById(superHero.getId());
         if (superHeroOptional.isPresent()){
             superHeroRepository.save(superHero);
             return superHero;
         }
         else{
-            StringBuilder errorStringBuilder = new StringBuilder();
+            var errorStringBuilder = new StringBuilder();
             errorStringBuilder.append("Hero with id: ");
             errorStringBuilder.append(superHero.getId());
             errorStringBuilder.append(" Not found");

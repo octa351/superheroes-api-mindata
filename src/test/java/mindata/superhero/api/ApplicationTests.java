@@ -25,7 +25,7 @@ public class ApplicationTests {
 	}
 	@Test
 	public void whenUpdateAnExistingHero_ThenSuccess() {
-		Optional<SuperHero> superHero = Optional.of(new SuperHero(1L, "MOCKMAN"));
+		var superHero = Optional.of(new SuperHero(1L, "MOCKMAN"));
 		Mockito.when(superHeroRepository.findById(ArgumentMatchers.any())).thenReturn(superHero);
 		superHeroService.saveSuperHero(superHero.get());
 		Mockito.verify(superHeroRepository).save(ArgumentMatchers.any());
@@ -33,7 +33,7 @@ public class ApplicationTests {
 
 	@Test
 	public void whenUpdateNonExistingHero_ThenNotFound() {
-		Optional<SuperHero> superHero = Optional.of(new SuperHero(1L, "MOCKMAN"));
+		var superHero = Optional.of(new SuperHero(1L, "MOCKMAN"));
 		Mockito.when(superHeroRepository.findById(ArgumentMatchers.any())).thenReturn(Optional.empty());
 		Assertions.assertThrows(HeroNotFoundException.class, () -> {
 			superHeroService.saveSuperHero(superHero.get());

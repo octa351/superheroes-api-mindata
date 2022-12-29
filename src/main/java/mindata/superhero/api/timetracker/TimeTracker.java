@@ -15,10 +15,10 @@ public class TimeTracker {
 
     @Around("@annotation(mindata.superhero.api.timetracker.LogTimeTaken)")
     public Object logTotalTime(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        long startTime = System.currentTimeMillis();
-        Object obj = proceedingJoinPoint.proceed();
-        long endTime = System.currentTimeMillis();
-        long timeTaken = endTime-startTime;
+        var startTime = System.currentTimeMillis();
+        var obj = proceedingJoinPoint.proceed();
+        var endTime = System.currentTimeMillis();
+        var timeTaken = endTime-startTime;
         logger.info("Request for method {} took {} ms to execute", proceedingJoinPoint.getSignature().getName(), timeTaken);
         return obj;
     }

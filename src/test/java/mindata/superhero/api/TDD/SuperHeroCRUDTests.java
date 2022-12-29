@@ -57,9 +57,9 @@ public class SuperHeroCRUDTests {
 
     @Test
     public void whenGetAllHeroes_ThenSuccess() throws Exception {
-        List<SuperHero> superHeroes = repository.findAll();
+       var superHeroes = repository.findAll();
 
-        ResultActions getAllHeroesResult = this.mockMvc.perform(MockMvcRequestBuilders
+        var getAllHeroesResult = this.mockMvc.perform(MockMvcRequestBuilders
                 .get("/findAllHeroes")
                 .accept(MediaType.APPLICATION_JSON));
 
@@ -159,7 +159,7 @@ public class SuperHeroCRUDTests {
     }
 
     private String createRequestJson(SuperHero superHero) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
+        var mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         ObjectWriter objectWriter = mapper.writer().withDefaultPrettyPrinter();
         return objectWriter.writeValueAsString(superHero);

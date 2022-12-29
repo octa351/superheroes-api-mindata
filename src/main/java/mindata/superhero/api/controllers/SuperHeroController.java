@@ -44,7 +44,7 @@ public class SuperHeroController {
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
     @LogTimeTaken
     public ResponseEntity<Object> getSuperHeroByName(@RequestParam String name) {
-        List<SuperHero> superHeroResponse = superHeroService.findSuperHeroByName(name);
+        var superHeroResponse = superHeroService.findSuperHeroByName(name);
         if (superHeroResponse.isEmpty()){
             throw new HeroNotFoundException("No heroes where found");
         }
@@ -60,7 +60,7 @@ public class SuperHeroController {
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
     @LogTimeTaken
     public ResponseEntity<Object> getSuperHeroById(@RequestParam Long id) {
-        Optional<SuperHero> superHeroResponse = superHeroService.findSuperHeroById(id);
+        var superHeroResponse = superHeroService.findSuperHeroById(id);
         if (superHeroResponse.isEmpty()){
             throw new HeroNotFoundException("No hero found with the provided id");
         }
@@ -89,7 +89,7 @@ public class SuperHeroController {
     @PreAuthorize("hasAuthority('SCOPE_q2-reprocess-resource-server/octa_scope')")
     @LogTimeTaken
     public ResponseEntity<Object> getAllSuperHeroes() {
-        List<SuperHero> superHeroResponse = superHeroService.findAllSuperHeroes();
+        var superHeroResponse = superHeroService.findAllSuperHeroes();
         if (superHeroResponse.isEmpty()){
             throw new HeroNotFoundException("No heroes where found");
         }
